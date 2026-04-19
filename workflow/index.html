@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《修仙界金融巨鳄》创作中转站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .status-bar {
+            background: #f8f9fa;
+            padding: 15px 40px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .status-dot.pending { background: #ffc107; }
+        .status-dot.processing { background: #17a2b8; }
+        .status-dot.completed { background: #28a745; }
+        .status-dot.reviewed { background: #007bff; }
+        
+        .main-content {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #495057;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #dee2e6;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .file-list {
+            list-style: none;
+        }
+        
+        .file-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid #e9ecef;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .file-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+        }
+        
+        .file-name {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 5px;
+        }
+        
+        .file-meta {
+            font-size: 0.9rem;
+            color: #6c757d;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .empty-state {
+            text-align: center;
+            color: #6c757d;
+            padding: 30px;
+            font-style: italic;
+        }
+        
+        .workflow {
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 20px;
+        }
+        
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 40px 0;
+        }
+        
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 50px;
+            right: 50px;
+            height: 4px;
+            background: #e9ecef;
+            z-index: 1;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+        
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 4px solid #e9ecef;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            color: #6c757d;
+            transition: all 0.3s ease;
+        }
+        
+        .step.active .step-icon {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .step.active .step-label {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .instructions {
+            background: #e7f3ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .instructions h3 {
+            color: #0056b3;
+            margin-bottom: 10px;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .workflow-steps {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .workflow-steps::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>《修仙界金融巨鳄》创作中转站</h1>
+            <div class="subtitle">专业网文创作流水线 · 实时协作平台</div>
+        </div>
+        
+        <div class="status-bar">
+            <div class="status-item">
+                <span class="status-dot pending"></span>
+                <span>待处理：<span id="pending-count">1</span>个剧本</span>
+            </div>
+            <div class="status-item">
+                <span class="status-dot processing"></span>
+                <span>处理中：<span id="processing-count">0</span>个章节</span>
+            </div>
+            <div class="status-item">
+                <span class="status-dot completed"></span>
+                <span>已完成：<span id="completed-count">0</span>个章节</span>
+            </div>
+            <div class="status-item">
+                <span class="status-dot reviewed"></span>
+                <span>已审核：<span id="reviewed-count">0</span>个章节</span>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2>📝 待处理剧本</h2>
+                <ul class="file-list" id="pending-list">
+                    <li class="file-item" onclick="viewFile('待处理/script_第二章_场景1_陆衍推出灵石存单.md')">
+                        <div class="file-name">script_第二章_场景1_陆衍推出灵石存单.md</div>
+                        <div class="file-meta">
+                            <span>创建时间：2026-04-19</span>
+                            <span>约2000字</span>
+                        </div>
+                    </li>
+                </ul>
+                <div class="empty-state" id="pending-empty" style="display: none;">
+                    暂无待处理剧本
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>✍️ 处理中章节</h2>
+                <ul class="file-list" id="processing-list">
+                    <div class="empty-state">暂无处理中章节</div>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>✅ 已完成章节</h2>
+                <ul class="file-list" id="completed-list">
+                    <div class="empty-state">暂无已完成章节</div>
+                </ul>
+            </div>
+            
+            <div class="section">
+                <h2>🎯 已审核章节</h2>
+                <ul class="file-list" id="reviewed-list">
+                    <div class="empty-state">暂无已审核章节</div>
+                </ul>
+            </div>
+            
+            <div class="workflow">
+                <h2>🚀 创作工作流程</h2>
+                <div class="workflow-steps">
+                    <div class="step active">
+                        <div class="step-icon">1</div>
+                        <div class="step-label">叼毛写剧本</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">2</div>
+                        <div class="step-label">老大用Qwen写作</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">3</div>
+                        <div class="step-label">叼毛检查修改</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-icon">4</div>
+                        <div class="step-label">最终成品入库</div>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3>📋 使用说明</h3>
+                    <ol>
+                        <li><strong>取剧本</strong>：点击"待处理"中的剧本文件查看内容</li>
+                        <li><strong>用Qwen写作</strong>：复制剧本中的提示词到Qwen3.6进行创作</li>
+                        <li><strong>保存章节</strong>：完成后保存为 chapter_*.md 到"已完成"文件夹</li>
+                        <li><strong>通知检查</strong>：在飞书中通知叼毛进行检查修改</li>
+                        <li><strong>取阅成品</strong>：从"已审核"中获取最终版章节</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // 简单的文件查看功能
+        function viewFile(filePath) {
+            alert('文件路径：' + filePath + '\n\n请复制剧本内容，使用Qwen3.6进行创作。\n完成后保存为：chapter_' + filePath.replace('script_', ''));
+        }
+        
+        // 更新文件列表（这里可以扩展为动态加载）
+        function updateFileLists() {
+            // 这里可以添加AJAX请求来动态更新文件列表
+            console.log('文件列表更新功能待扩展');
+        }
+        
+        // 页面加载时更新
+        document.addEventListener('DOMContentLoaded', updateFileLists);
+    </script>
+</body>
+</html>

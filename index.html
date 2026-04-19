@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《修仙界金融巨鳄》创作项目</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .main-content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            color: #495057;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .section-title i {
+            font-size: 1.5rem;
+        }
+        
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .file-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .file-card:hover {
+            transform: translateY(-5px);
+            border-color: #667eea;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .file-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+        
+        .file-desc {
+            color: #6c757d;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .file-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #868e96;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .workflow {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        
+        .workflow-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 40px 0;
+        }
+        
+        .workflow-steps::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 50px;
+            right: 50px;
+            height: 4px;
+            background: #e9ecef;
+            z-index: 1;
+        }
+        
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+        }
+        
+        .step-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 4px solid #e9ecef;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            color: #6c757d;
+            transition: all 0.3s ease;
+        }
+        
+        .step.active .step-icon {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .step.active .step-label {
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .instructions {
+            background: #e7f3ff;
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            border-left: 4px solid #007bff;
+        }
+        
+        .instructions h3 {
+            color: #0056b3;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .instructions ol {
+            margin-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #6c757d;
+            font-size: 0.9rem;
+            border-top: 1px solid #e9ecef;
+            background: #f8f9fa;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .file-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .workflow-steps {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .workflow-steps::before {
+                display: none;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>《修仙界金融巨鳄》</h1>
+            <div class="subtitle">专业网文创作项目 · GitHub Pages托管</div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">6,800</div>
+                    <div class="stat-label">第一章字数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2</div>
+                    <div class="stat-label">进行中章节</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">设定文件</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Qwen3.6创作</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-book"></i> 章节内容</h2>
+                <div class="file-grid">
+                    <a href="chapters/《修仙界金融巨鳄》第一章_完整版_Qwen创作.md" class="file-card" download>
+                        <div class="file-icon">📖</div>
+                        <div class="file-name">第一章：穿越与觉醒</div>
+                        <div class="file-desc">完整版6800字，四个场景：华尔街之死→金融之眼觉醒→坊市初探→战争博弈</div>
+                        <div class="file-meta">
+                            <span>Qwen3.6创作</span>
+                            <span>6.8K字</span>
+                        </div>
+                    </a>
+                    
+                    <a href="scripts/script_第二章_场景1_陆衍推出灵石存单.md" class="file-card" download>
+                        <div class="file-icon">📝</div>
+                        <div class="file-name">第二章场景1剧本</div>
+                        <div class="file-desc">陆衍推出"陆氏灵石存单"，建立第一个金融产品，与传统钱庄初次交锋</div>
+                        <div class="file-meta">
+                            <span>待创作</span>
+                            <span>2K字计划</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-cogs"></i> 设定文件</h2>
+                <div class="file-grid">
+                    <a href="settings/货币体系设定.md" class="file-card" download>
+                        <div class="file-icon">💰</div>
+                        <div class="file-name">货币体系设定</div>
+                        <div class="file-desc">1灵石=10灵珠=1000灵萃，四级纯度体系，严谨的修仙界金融基础</div>
+                        <div class="file-meta">
+                            <span>核心设定</span>
+                            <span>1.7KB</span>
+                        </div>
+                    </a>
+                    
+                    <a href="settings/主角设定-陆衍.md" class="file-card" download>
+                        <div class="file-icon">👤</div>
+                        <div class="file-name">主角设定-陆衍</div>
+                        <div class="file-desc">华尔街quant穿越，冷静理性+毒舌幽默+金融之眼，金融帝国建造者</div>
+                        <div class="file-meta">
+                            <span>人物档案</span>
+                            <span>3.8KB</span>
+                        </div>
+                    </a>
+                    
+                    <a href="settings/修仙界金融体系构建.md" class="file-card" download>
+                        <div class="file-icon">🏦</div>
+                        <div class="file-name">金融体系构建</div>
+                        <div class="file-desc">四阶段金融帝国发展路线：基础→扩张→垄断→挑战天道</div>
+                        <div class="file-meta">
+                            <span>世界观</span>
+                            <span>4.2KB</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-sync-alt"></i> 工作流程</h2>
+                <div class="workflow">
+                    <div class="workflow-steps">
+                        <div class="step active">
+                            <div class="step-icon">1</div>
+                            <div class="step-label">叼毛写剧本</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">2</div>
+                            <div class="step-label">老大用Qwen写作</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">3</div>
+                            <div class="step-label">叼毛检查修改</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-icon">4</div>
+                            <div class="step-label">最终成品入库</div>
+                        </div>
+                    </div>
+                    
+                    <div class="instructions">
+                        <h3><i class="fas fa-info-circle"></i> 使用说明</h3>
+                        <ol>
+                            <li><strong>查看文件</strong>：点击上方卡片查看或下载文件</li>
+                            <li><strong>获取剧本</strong>：下载第二章场景1剧本，复制提示词</li>
+                            <li><strong>用Qwen创作</strong>：粘贴到Qwen3.6进行写作（约2000字）</li>
+                            <li><strong>保存文件</strong>：完成后保存为 chapter_第二章_场景1.md</li>
+                            <li><strong>继续创作</strong>：我会准备后续剧本，保持日更节奏</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title"><i class="fas fa-download"></i> 中转站系统</h2>
+                <div class="file-grid">
+                    <a href="workflow/index.html" class="file-card">
+                        <div class="file-icon">🌐</div>
+                        <div class="file-name">中转站网页界面</div>
+                        <div class="file-desc">可视化创作管理界面，实时跟踪进度，一键复制提示词</div>
+                        <div class="file-meta">
+                            <span>点击访问</span>
+                            <span>HTML页面</span>
+                        </div>
+                    </a>
+                    
+                    <a href="workflow/viewer.html" class="file-card">
+                        <div class="file-icon">👁️</div>
+                        <div class="file-name">剧本查看器</div>
+                        <div class="file-desc">详细剧本查看，一键复制提示词模板，优化创作体验</div>
+                        <div class="file-meta">
+                            <span>交互界面</span>
+                            <span>9KB</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>《修仙界金融巨鳄》创作项目 · 使用Qwen3.6 Plus创作 · 项目启动时间：2026-04-19</p>
+            <p>GitHub Pages托管 · 实时更新 · 专业网文创作流水线</p>
+        </div>
+    </div>
+    
+    <script>
+        // 简单的交互效果
+        document.querySelectorAll('.file-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (!this.getAttribute('href').endsWith('.html')) {
+                    // 如果是下载链接，添加下载提示
+                    const fileName = this.querySelector('.file-name').textContent;
+                    console.log(`开始下载：${fileName}`);
+                }
+            });
+        });
+        
+        // 更新步骤状态（这里可以扩展为根据实际进度更新）
+        function updateWorkflowStep(stepNumber) {
+            document.querySelectorAll('.step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.querySelectorAll('.step')[stepNumber - 1].classList.add('active');
+        }
+        
+        // 默认显示第一步
+        updateWorkflowStep(1);
+    </script>
+</body>
+</html>
